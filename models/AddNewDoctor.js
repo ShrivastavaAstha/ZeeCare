@@ -10,7 +10,7 @@ const AddNewDoctorSchema = new mongoose.Schema(
     gender: { type: String, required: true, trim: true },
     password: { type: String, required: true, trim: true },
     doctorDepartment: { type: String, required: true, trim: true },
-    // docAvatar: { type: String, required: true, trim: true },
+    docAvatar: { type: String, required: true, trim: true },
   },
   {
     timestamps: true,

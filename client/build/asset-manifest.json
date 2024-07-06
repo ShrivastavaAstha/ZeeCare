@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.a043941d.css",
-    "main.js": "/static/js/main.e7370600.js",
+    "main.css": "/static/css/main.2ca4a005.css",
+    "main.js": "/static/js/main.1ed1521f.js",
     "static/media/biography.png": "/static/media/biography.11ac2cd35b5f7c363453.png",
     "static/media/whoweare.png": "/static/media/whoweare.717a1f4bb767517cb353.png",
     "static/media/Vector.png": "/static/media/Vector.008692c53c78a31f12d2.png",
@@ -10,13 +10,17 @@
     "static/media/logo.png": "/static/media/logo.9c1da4a83960acf9b3e4.png",
     "static/media/revicons.eot": "/static/media/revicons.a77de540a38981833f9e.eot",
     "static/media/revicons.ttf": "/static/media/revicons.57fd05d4ae650374c8de.ttf",
+    "static/media/messagebg2.avif": "/static/media/messagebg2.8a0d671535a0703c98e3.avif",
     "static/media/revicons.woff": "/static/media/revicons.e8746a624ed098489406.woff",
+    "static/media/messagebg5.avif": "/static/media/messagebg5.376a9d3499230f2db781.avif",
+    "static/media/messagebg6.avif": "/static/media/messagebg6.cfd94959dc12c07782aa.avif",
+    "static/media/bg.avif": "/static/media/bg.cf3a78cc8936a60c2392.avif",
     "index.html": "/index.html",
-    "main.a043941d.css.map": "/static/css/main.a043941d.css.map",
-    "main.e7370600.js.map": "/static/js/main.e7370600.js.map"
+    "main.2ca4a005.css.map": "/static/css/main.2ca4a005.css.map",
+    "main.1ed1521f.js.map": "/static/js/main.1ed1521f.js.map"
   },
   "entrypoints": [
-    "static/css/main.a043941d.css",
-    "static/js/main.e7370600.js"
+    "static/css/main.2ca4a005.css",
+    "static/js/main.1ed1521f.js"
   ]
 }

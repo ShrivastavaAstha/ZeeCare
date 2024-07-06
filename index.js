@@ -13,6 +13,37 @@ const verifyToken = require("./tokens/verifyToken");
 const generateToken = require("./tokens/generateToken");
 const { encryptPassword, verifyPassword } = require("./functions/encryption");
 const path = require("path");
+const multer = require("multer");
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/"); // Adjust the destination folder as per your setup
+  },
+  filename: function (req, file, cb) {
+    const ext = path.extname(file.originalname);
+    cb(null, Date.now() + ext);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/jpeg" ||
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/avif"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+});
 
 //Registerapi----------------------------------------------------------
 app.post("/api/registerapi", async (req, res) => {
@@ -92,28 +123,34 @@ const checkIfUserLogin = (req, res, next) => {
 };
 // ---------------------------------------------------------------------
 // ----------------------------------------------------------------------
-app.post("/api/addnewdoctor", checkIfUserLogin, async (req, res) => {
-  try {
-    const doctordata = {
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      email: req.body.email,
-      contact: req.body.contact,
-      nic: req.body.nic,
-      dob: req.body.dob,
-      gender: req.body.gender,
-      password: req.body.password,
-      doctorDepartment: req.body.doctorDepartment,
-      docAvatar: req.body.docAvatar,
-    };
-    console.log(doctordata);
-    const newdoctordata = new addNewDoctormodel(doctordata);
-    await newdoctordata.save();
-    return res.status(200).json({ success: true, message: "Doctor Added" });
-  } catch (error) {
-    return res.status(400).json({ success: false, error: error.message });
+app.post(
+  "/api/addnewdoctor",
+  upload.single("docAvatar"),
+  checkIfUserLogin,
+  async (req, res) => {
+    try {
+      const doctordata = {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        contact: req.body.contact,
+        nic: req.body.nic,
+        dob: req.body.dob,
+        gender: req.body.gender,
+        password: req.body.password,
+        doctorDepartment: req.body.doctorDepartment,
+        docAvatar: req.file ? req.file.path : "",
+      };
+      console.log(doctordata);
+      const newdoctordata = new addNewDoctormodel(doctordata);
+      // const docAvatar = req.file ? req.file.path : "";
+      await newdoctordata.save();
+      return res.status(200).json({ success: true, message: "Doctor Added" });
+    } catch (error) {
+      return res.status(400).json({ success: false, error: error.message });
+    }
   }
-});
+);
 // ----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 app.post("/api/addnewadmin", checkIfUserLogin, async (req, res) => {
@@ -149,7 +186,7 @@ app.get("/api/addnewdoctor", checkIfUserLogin, async (req, res) => {
 
 // ----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-app.post("/api/addmessage", checkIfUserLogin, async (req, res) => {
+app.post("/api/addmessage", async (req, res) => {
   try {
     const messagedata = {
       firstname: req.body.firstname,
@@ -201,8 +238,8 @@ app.post("/api/addappointment", checkIfUserLogin, async (req, res) => {
       gender: req.body.gender,
       appointmentDate: req.body.appointmentDate,
       department: req.body.department,
-      doctorFirstname: req.body.doctorFirstname,
-      doctorLastname: req.body.doctorLastname,
+      doctorId: req.body.doctorId,
+      // doctorLastname: req.body.doctorLastname,
       address: req.body.address,
       hasVisited: req.body.hasVisited,
     };
